@@ -1,4 +1,4 @@
-# Pasos para crear un serivod DNS linux
+# Pasos para crear un serivod DNS linux Ubuntu 
 
 1. Ip statica
 2. netplan apply
