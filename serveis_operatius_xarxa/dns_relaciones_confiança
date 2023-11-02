@@ -1,0 +1,31 @@
+# RESUM CONFIGURACIÓ
+
+## Servidor1.dominijv.local
+Paràmetres de xarxa:
+- IP: 10.10.10.10
+- DNS Primari: 10.10.10.10 (ell mateix)
+- DNS Secundari: 8.8.8.8 (google per tenir internet)
+
+Dins la configuració del Servidor DNS propi:
+- Cal afegir Reenviador condicional: dominiAmic.local -> 10.10.10.30
+- Estaria bé afegir Reenviador general a google à 8.8.8.8
+
+## Servidor3.dominiAmic.local
+Paràmetres de xarxa:
+- IP: 10.10.10.30
+- DNS Primari: 10.10.10.30 (ell mateix)
+- DNS Secundari: 8.8.8.8 (google per tenir internet)
+
+Dins la configuració del Servidor DNS propi:
+- Cal afegir Reenviador condicional: dominiNCX.local -> 10.10.10.10
+- Estaria bé afegir Reenviador general a google à 8.8.8.8
+
+## Client 10
+Aquesta màquina ha d’estar posada dins del dominiNCX.local
+- IP: 10.10.10.150
+- DNS Primari: 10.10.10.10 (el seu servidor)
+- No cal que tingui DNS secundari, o opcionalment podria ser google
+
+Atenció à per fer la comprovació que un usuari Amic pot validar-se contra el primer domini, hem d’entrar des d’aquest client, validant-nos contra el servidor1.dominiJV.local, però iniciant sessió amb un usuari del servidor amic.
+- És a dir... haurem de posar: Usuari à dominiAmic.local\amic
+- Password à el password que tingui aquest usuari
