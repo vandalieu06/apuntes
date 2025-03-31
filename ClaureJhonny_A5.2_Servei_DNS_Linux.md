@@ -1,14 +1,8 @@
-# Desplegament d’Aplicacions Web
-
-# Servei DNS en Sistema Linux
-
-
+# Desplegament d’Aplicacions Web <br>Servei DNS en Sistema Linux
 
 **Fet Per:** Jhonny Claure
 
 **Data:** 31/03/2025
-
-
 
 **Exercici 1 – Instal∙lació del servei**
 
@@ -42,18 +36,12 @@ En una màquina Ubuntu Server 24.04, segueix els següents passos per a instal�
 <img src="file:///home/vandalieu06/.config/marktext/images/2025-03-31-13-04-10-image.png" title="" alt="" data-align="center">**h. Explica què és un forwarder**
 Un reenviador DNS és un servidor DNS configurat per a reexpedir les consultes que no poden resoldre's localment a un altre servidor DNS, normalment un extern.
 
-
-
 **i. Explica què podem trobar en el fitxer/etc/bind/named.conf.options**
 Aquest fitxer normalment conté opcions globals per al servidor DNS, com els forwards, ports que escolta, directory del fitxers temproals, logs, etc.
-
-
 
 **j. Explica què podem trobar en el fitxer/etc/bind/named.conf.local**
 
 Conté la configuració del servidor DNS local, i aquí és on es declaren les zones associades al domini.
-
-
 
 **Exercici 3 – Editar el fitxer named.conf.local**
 
@@ -78,7 +66,6 @@ zone "30.20.10.in‐addr.arpa" {
 **Exercici 4 – Creació de les zones DNS**
 
 **a. Executa la següent comanda per a crear la carpeta de zones: sudo mkdir ‐p /etc/bind/zones**
-
 
 **b. Crea el fitxer /etc/bind/zones/db.cognom.dawi posa‐li la següent definició de la zona directa**
 
@@ -115,8 +102,6 @@ $TTL 86400
 30 IN PTR pclinux.cognom.daw.
 40 IN PTR printer.cognom.daw.
 ```
-
-
 
 **Exercici 5 – Configuració general del servidor**
 
