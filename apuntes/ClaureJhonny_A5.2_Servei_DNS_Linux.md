@@ -4,7 +4,7 @@
 
 **Data:** 31/03/2025
 
-**Exercici 1 – Instal∙lació del servei**
+## **Exercici 1 – Instal∙lació del servei**
 
 En una màquina Ubuntu Server 24.04, segueix els següents passos per a instal∙lar i configurar el servei de DNS:
 **a. Instal∙la Ubuntu Server 24.**
@@ -16,7 +16,7 @@ En una màquina Ubuntu Server 24.04, segueix els següents passos per a instal�
 
 <img src="file:///home/vandalieu06/.config/marktext/images/2025-03-31-12-47-44-image.png" title="" alt="" data-align="center">
 
-**c. Comprova que la teva màquina pot fer ping a www.jviladoms.cat**
+<br>**c. Comprova que la teva màquina pot fer ping a www.jviladoms.cat**
 <img src="file:///home/vandalieu06/.config/marktext/images/2025-03-31-12-49-45-image.png" title="" alt="" data-align="center">
 
 **d. Actualitza els repositoris: sudo apt update**
@@ -31,9 +31,9 @@ En una màquina Ubuntu Server 24.04, segueix els següents passos per a instal�
 
 <img src="file:///home/vandalieu06/.config/marktext/images/2025-03-31-12-54-46-image.png" title="" alt="" data-align="center">
 
-**g. Per a què s’iniciï el servei DNS al iniciar el sistema, executa: sudo systemctl enable bind9**
+<br>**g. Per a què s’iniciï el servei DNS al iniciar el sistema, executa: sudo systemctl enable bind9**
 
-<img src="file:///home/vandalieu06/.config/marktext/images/2025-03-31-13-04-10-image.png" title="" alt="" data-align="center">**h. Explica què és un forwarder**
+<img src="file:///home/vandalieu06/.config/marktext/images/2025-03-31-13-04-10-image.png" title="" alt="" data-align="center"><br>**h. Explica què és un forwarder**
 Un reenviador DNS és un servidor DNS configurat per a reexpedir les consultes que no poden resoldre's localment a un altre servidor DNS, normalment un extern.
 
 **i. Explica què podem trobar en el fitxer/etc/bind/named.conf.options**
@@ -43,7 +43,7 @@ Aquest fitxer normalment conté opcions globals per al servidor DNS, com els for
 
 Conté la configuració del servidor DNS local, i aquí és on es declaren les zones associades al domini.
 
-**Exercici 3 – Editar el fitxer named.conf.local**
+## **Exercici 3 – Editar el fitxer named.conf.local**
 
 Edita el fitxer/etc/bind/named.conf.locali afegeix‐li les següents línies que permetran crear les zones de búsqueda directa i inversa:
 
@@ -63,30 +63,34 @@ zone "30.20.10.in‐addr.arpa" {
 
 <img src="file:///home/vandalieu06/.config/marktext/images/2025-03-31-13-23-48-image.png" title="" alt="" data-align="center">
 
-**Exercici 4 – Creació de les zones DNS**
+## **Exercici 4 – Creació de les zones DNS**
 
 **a. Executa la següent comanda per a crear la carpeta de zones: sudo mkdir ‐p /etc/bind/zones**
 
-**b. Crea el fitxer /etc/bind/zones/db.cognom.dawi posa‐li la següent definició de la zona directa**
+<img src="file:///home/vandalieu06/.config/marktext/images/2025-03-31-22-56-35-image.png" title="" alt="" data-align="center">
+
+<br>**b. Crea el fitxer /etc/bind/zones/db.cognom.daw i posa‐li la següent definició de la zona directa**
 
 ```shell
 $TTL 86400
 @ IN SOA servidor.cognom.daw. root.cognom.daw. (
-    2025032101 ; Serial
-    3600 ; Refresh
-    1800 ; Retry
-    604800 ; Expire
-    86400 ) ; Minimum TTL
+    2025032101 ; Serial
+    3600 ; Refresh
+    1800 ; Retry
+    604800 ; Expire
+    86400 ) ; Minimum TTL
 @ IN NS servidor.cognom.daw.
-servidor IN A 10.20.30.
-pcwin IN A 10.20.30.
-pclinux IN A 10.20.30.
-printer IN A 10.20.30.
+servidor IN A 10.20.30.10
+pcwin IN A 10.20.30.20
+pclinux IN A 10.20.30.30
+printer IN A 10.20.30.40
 www IN CNAME servidor.cognom.daw.
 server IN CNAME servidor.cognom.daw.
 ```
 
-**c. Crea el fitxer/etc/bind/zones/db.30.20.10i posa‐li la següent definiciió de la zona inversa**
+<img src="file:///home/vandalieu06/.config/marktext/images/2025-03-31-23-05-11-image.png" title="" alt="" data-align="center">
+
+<br>**c. Crea el fitxer/etc/bind/zones/db.30.20.10i posa‐li la següent definiciió de la zona inversa**
 
 ```shell
 $TTL 86400
@@ -103,47 +107,60 @@ $TTL 86400
 40 IN PTR printer.cognom.daw.
 ```
 
-**Exercici 5 – Configuració general del servidor**
+<img src="file:///home/vandalieu06/.config/marktext/images/2025-03-31-23-09-30-image.png" title="" alt="" data-align="center">
+
+## **Exercici 5 – Configuració general del servidor**
 
 Per acabar de configurar el servidor correctament:
 
-```
-a. Edita el fitxer/etc/bind/named.conf.optionsi revisa que aparegui la següent
-configuració en la secció → options
-```
+**a. Edita el fitxer/etc/bind/named.conf.optionsi revisa que aparegui la següent
+configuració en la secció → options**
 
-```
+```shell
 options {
-directory "/var/cache/bind";
-recursion yes;
-allow‐query { any; };
-forwarders {
-8.8.8.8;
-8.8.4.4;
+    directory "/var/cache/bind";
+    recursion yes;
+    allow‐query { any; };
+    forwarders {
+        8.8.8.8;
+        8.8.4.4;
+    };
+    dnssec‐validation auto;
 };
-dnssec‐validation auto;
-};
 ```
 
-```
-b. Si tot és correcte, podem reiniciar el servei →sudo systemctl restart bind
-c. Finalment podem comprovar l’estat →sudo systemctl status bind
-```
+<img src="file:///home/vandalieu06/.config/marktext/images/2025-03-31-23-13-16-image.png" title="" alt="" data-align="center">
 
-**Exercici 7 – Comprovació funcionament client Linux**
+<br>**b. Si tot és correcte, podem reiniciar el servei →sudo systemctl restart bind**
+<br>**c. Finalment podem comprovar l’estat →sudo systemctl status bind**
 
-Des d’una màquina client Linux com Ubuntu Desktop o Lubuntu, segueix els següents passos
-per a comprovar el funcionament:
-a. Posa la màquina client en la mateixa xarxa Red NAT que el servidor DNS
-b. Edita els paràmetres de xarxa del client i posa‐li com a servidor DNS la IP de la teva
-màquina servidor DNS →10.20.30.
-c. Comprova que el servidor DNS funciona correctament, executant des del client:
+<img src="file:///home/vandalieu06/.config/marktext/images/2025-03-31-23-14-38-image.png" title="" alt="" data-align="center">
+
+## **Exercici 7 – Comprovació funcionament client Linux**
+
+Des d’una màquina client Linux com Ubuntu Desktop o Lubuntu, segueix els següents passos per a comprovar el funcionament:
+**a. Posa la màquina client en la mateixa xarxa Red NAT que el servidor DNS**
+<img src="file:///home/vandalieu06/.config/marktext/images/2025-03-31-23-24-06-image.png" title="" alt="" data-align="center">
+
+**b. Edita els paràmetres de xarxa del client i posa‐li com a servidor DNS la IP de la teva màquina servidor DNS →10.20.30.10**
+<img src="file:///home/vandalieu06/.config/marktext/images/2025-03-31-23-24-43-image.png" title="" alt="" data-align="center">
+
+**c. Comprova que el servidor DNS funciona correctament, executant des del client:**
+
+```shell
 nslookup servidor.cognom.daw
-nslookup [http://www.cognom.daw](http://www.cognom.daw)
+nslookup www.cognom.daw
 nslookup pcwin.cognom.daw
+```
+
+<img title="" src="file:///home/vandalieu06/.config/marktext/images/2025-03-31-23-25-56-image.png" alt="" data-align="center"><br>
 
 **Exercici 8 – Comprovació funcionament client Windows**
 
 Torna a provar de fer les comprovacions però ara a partir d’un client Windows 10
 
-DAW 3
+<img src="file:///home/vandalieu06/.config/marktext/images/2025-03-31-23-28-09-image.png" title="" alt="" data-align="center">
+
+<br>
+
+<img src="file:///home/vandalieu06/.config/marktext/images/2025-03-31-23-29-07-image.png" title="" alt="" data-align="center">
