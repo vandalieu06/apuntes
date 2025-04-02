@@ -258,7 +258,7 @@ Nerune... How many small magic circles can you make?!
 
 The hald siiize? About ten per daaay
 
-º**PAG 22**
+**PAG 22**
 
 If 1/10th the size
 
